@@ -10,7 +10,7 @@ func initSAmple() []byte {
 		"shortname": "Kibana",
 			"appdesc": {
 				"longname": "Kibana Dashboard for yourr logs",
-				"link": "http://toto.com",
+				"link": "http://kibana.com",
 				"env": "dev"
 			}
 		},
@@ -18,7 +18,7 @@ func initSAmple() []byte {
 		"shortname": "Grafana",
 			"appdesc": {
 				"longname": "Grafana Dashboard for yourr metrics",
-				"link": "http://tata.com",
+				"link": "http://grafana.com",
 				"env": "dev"
 			}
 		},
@@ -26,14 +26,13 @@ func initSAmple() []byte {
 			"shortname": "Kibana",
 				"appdesc": {
 					"longname": "Kibana Dashboard for yourr logs",
-					"link": "http://titi.com",
+					"link": "http://kibana.com",
 					"env": "prod"
 				}
 		}
 	]
-}`)
+	}`)
 	return sampleJSONLinks
-
 }
 
 func findAll() {
