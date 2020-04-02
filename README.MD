@@ -1,10 +1,16 @@
-# Compagny helper
+# WIP: Compagny helper
 
 Tired to find into your bookmarks a corporate link?
 
 Why do not use a helper command line in order to retrieve for example the compagny kibana urls?
 
 ## WIP
+
+Remain 
+
+- Server: Load json from file
+
+- Client: Implement describe, get, and open function
 
 ## How its work
 
