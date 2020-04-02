@@ -85,7 +85,7 @@ func setupRoutes(tracer opentracing.Tracer) {
 	defer cancel()
 
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal().Msgf("Server forced to shutdown:", err)
+		log.Fatal().Msgf("Server forced to shutdown: %v", err)
 	}
 
 	log.Info().Msg("Server exiting")
