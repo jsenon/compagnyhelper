@@ -5,8 +5,8 @@ type objectLink struct {
 }
 
 type application struct {
-	Shortname string    `json:"shortname"`
-	Desc      []appdesc `json:"appdesc"`
+	Shortname string  `json:"shortname"`
+	Desc      appdesc `json:"appdesc"`
 }
 
 type appdesc struct {
