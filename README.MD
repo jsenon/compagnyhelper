@@ -17,7 +17,7 @@ compagnyhelper get links
 ```
 
 ```sh
-conpagnyhelper describe links kibana
+compagnyhelper describe links kibana
 ```
 
 ```sh
