@@ -105,12 +105,12 @@ func setRouterAPI(router *gin.Engine, tracer opentracing.Tracer) {
 	router.POST("/retrieve-link/:name",
 		opengintracing.NewSpan(tracer, "retrieve-link"),
 		opengintracing.InjectToHeaders(tracer, true),
-		retrieveLink)
+		retrievedescribeLink)
 
 	router.POST("/describe-link/:name",
 		opengintracing.NewSpan(tracer, "describe-link"),
 		opengintracing.InjectToHeaders(tracer, true),
-		describeLink)
+		retrievedescribeLink)
 
 	router.POST("/open-link/:name",
 		opengintracing.NewSpan(tracer, "open-link"),
