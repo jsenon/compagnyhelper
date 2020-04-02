@@ -1,0 +1,18 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  annotations:
+    prometheus.io/scrape: "false"
+    prometheus.io/port: "8080"
+  labels:
+    app: compagnyhelper
+  name: compagnyhelper
+spec:
+  selector:
+    app: compagnyhelper
+  ports:
+    - protocol: TCP
+      name: http-8080
+      port: 8080
+      targetPort: 8080

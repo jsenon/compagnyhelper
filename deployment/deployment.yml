@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+  name: compagnyhelper
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: compagnyhelper
+  template:
+    metadata:
+      labels:
+        app: compagnyhelper
+    spec:
+      containers:
+        - name: compagnyhelper
+          image: jsenon/compagnyhelper:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: "200m"
+          command:
+            - /compagnyhelper
+          args:
+            [
+              "server",
+              "--intputdir",
+              "/datas",
+              "--disabletrace",
+            ]
+          volumeMounts:
+            - mountPath: /datas
+              name: compagnyhelper-volume
+      volumes:
+        - name: compagnyhelper-volume
+          emptyDir: {}
