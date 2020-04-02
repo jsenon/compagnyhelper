@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package cmd is part of the cli
 package cmd
 
 import (
@@ -26,14 +27,15 @@ import (
 )
 
 var cfgFile string
-var version bool
 var loglevel bool
+
+const exitOne int = 1
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "compagnyhelper",
 	Short:   "A swiss knife helper compagny",
-	Long:    `An helper that can retrieve usefull compagny links`,
+	Long:    `An helper that can retrieve useful compagny links`,
 	Version: fmt.Sprintf("Version: %v, build from: %v, on: %v\n", configs.Version, configs.GitCommit, configs.BuildDate),
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.SetVersionTemplate("trst")
@@ -46,7 +48,7 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
-		os.Exit(1)
+		os.Exit(exitOne)
 	}
 }
 
@@ -62,7 +64,6 @@ func init() {
 	}
 
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -75,7 +76,7 @@ func initConfig() {
 		home, err := homedir.Dir()
 		if err != nil {
 			fmt.Println(err)
-			os.Exit(1)
+			os.Exit(exitOne)
 		}
 
 		// Search config in home directory with name ".compagnyhelper" (without extension).

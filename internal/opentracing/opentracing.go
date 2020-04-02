@@ -13,6 +13,8 @@ import (
 	"github.com/uber/jaeger-client-go/zipkin"
 )
 
+const nbrFlush time.Duration = 1
+
 // ConfigureTracing configures OpenTracing client
 func ConfigureTracing(jaeger string) (tracer opentracing.Tracer, closer io.Closer, err error) {
 	var localagenthostport string
@@ -35,7 +37,10 @@ func ConfigureTracing(jaeger string) (tracer opentracing.Tracer, closer io.Close
 		localagenthostport = jaeger + ":5775"
 	}
 
-	sender, _ := myjaeger.NewUDPTransport(localagenthostport, 0)
+	sender, err := myjaeger.NewUDPTransport(localagenthostport, 0)
+	if err != nil {
+		return tracer, closer, err
+	}
 
 	//B3
 	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
@@ -49,12 +54,13 @@ func ConfigureTracing(jaeger string) (tracer opentracing.Tracer, closer io.Close
 		myjaeger.NewConstSampler(true),
 		myjaeger.NewRemoteReporter(
 			sender,
-			myjaeger.ReporterOptions.BufferFlushInterval(1*time.Second)),
+			myjaeger.ReporterOptions.BufferFlushInterval(nbrFlush*time.Second)),
 		injector,
 		extractor,
 		zipkinSharedRPCSpan,
 	)
 	// Important in order to reuse tracer, to extract b3
 	opentracing.SetGlobalTracer(tracer)
+
 	return tracer, closer, nil
 }

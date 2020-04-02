@@ -1,5 +1,4 @@
-// Object link
-
+// Package cmd is part of the cli
 package cmd
 
 import (
@@ -41,6 +40,7 @@ func init() {
 	if err != nil {
 		log.Error().Msgf("Error binding env value: %v", err.Error())
 	}
+
 	linkDescCmd.PersistentFlags().StringVar(&env, "environment", "dev",
 		"Set environment variable where retrieve object")
 
@@ -48,6 +48,7 @@ func init() {
 	if err != nil {
 		log.Error().Msgf("Error binding env value: %v", err.Error())
 	}
+
 	linkOpCmd.PersistentFlags().StringVar(&env, "environment", "dev",
 		"Set environment variable where retrieve object")
 
@@ -55,7 +56,6 @@ func init() {
 	if err != nil {
 		log.Error().Msgf("Error binding env value: %v", err.Error())
 	}
-
 }
 
 func init() {

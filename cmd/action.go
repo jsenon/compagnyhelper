@@ -1,35 +1,35 @@
-// get, describe, open
-
+// Package cmd is part of the cli
 package cmd
 
 import (
 	"github.com/spf13/cobra"
 )
 
+const minArgs int = 1
+
 var getCmd = &cobra.Command{
 	Use:   "get",
 	Short: "Get an object",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(minArgs),
 	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 var describeCmd = &cobra.Command{
 	Use:   "describe",
 	Short: "Describe an object",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(minArgs),
 	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 var openCmd = &cobra.Command{
 	Use:   "open",
 	Short: "Open an object",
-	Args:  cobra.MinimumNArgs(1),
+	Args:  cobra.MinimumNArgs(minArgs),
 	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-
 }
 
 func init() {
@@ -37,5 +37,4 @@ func init() {
 	rootCmd.AddCommand(describeCmd)
 	rootCmd.AddCommand(openCmd)
 	cobra.OnInitialize(initConfig)
-
 }

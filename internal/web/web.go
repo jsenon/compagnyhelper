@@ -1,7 +1,9 @@
+//Package web will serve the web server part
 package web
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,25 +21,37 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+const nbrTimeOut time.Duration = 5
+
 // Serve launch http server
 func Serve() {
 	log.Info().Msg("Startin Web Server on port 8080")
+
 	var tracer opentracing.Tracer
+
 	if !viper.GetBool("DISABLETRACE") {
+		var closer io.Closer
+
+		var err error
+
 		jaeger := viper.GetString("JAEGERURL")
 
-		tracer, closer, err := myopentracing.ConfigureTracing(jaeger)
+		tracer, closer, err = myopentracing.ConfigureTracing(jaeger)
 		if err != nil {
 			log.Fatal().Msgf("Can't start: %v", err)
 		}
+
 		setupRoutes(tracer)
-		defer closer.Close()
+
+		defer closer.Close() //nolint: errcheck
 	}
+
 	setupRoutes(tracer)
 }
 
 func setupRoutes(tracer opentracing.Tracer) {
 	log.Debug().Msgf("tracer: %v", tracer)
+
 	if tracer == nil {
 		tracer = opentracing.GlobalTracer()
 	}
@@ -48,7 +62,7 @@ func setupRoutes(tracer opentracing.Tracer) {
 	router.Use(gin.Recovery())
 	router.Use(logger.SetLogger())
 
-	setRouterApi(router, tracer)
+	setRouterAPI(router, tracer)
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -63,12 +77,13 @@ func setupRoutes(tracer opentracing.Tracer) {
 
 	quit := make(chan os.Signal)
 
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM) //nolint: staticcheck
 	<-quit
 	log.Info().Msg("Shuting down server...")
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), nbrTimeOut*time.Second)
 	defer cancel()
+
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal().Msgf("Server forced to shutdown:", err)
 	}
@@ -76,8 +91,7 @@ func setupRoutes(tracer opentracing.Tracer) {
 	log.Info().Msg("Server exiting")
 }
 
-func setRouterApi(router *gin.Engine, tracer opentracing.Tracer) {
-
+func setRouterAPI(router *gin.Engine, tracer opentracing.Tracer) {
 	router.GET("/healthz",
 		opengintracing.NewSpan(tracer, "healthz"),
 		opengintracing.InjectToHeaders(tracer, true),
@@ -102,5 +116,4 @@ func setRouterApi(router *gin.Engine, tracer opentracing.Tracer) {
 		opengintracing.NewSpan(tracer, "open-link"),
 		opengintracing.InjectToHeaders(tracer, true),
 		openLink)
-
 }

@@ -1,5 +1,4 @@
-// launch server part
-
+// Package cmd is part of the cli
 package cmd
 
 import (
@@ -66,11 +65,9 @@ func init() {
 	}
 
 	viper.SetDefault("jaegerurl", "")
-
 }
 
 func init() {
 	rootCmd.AddCommand(serverCmd)
 	cobra.OnInitialize(initConfig)
-
 }
