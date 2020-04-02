@@ -17,7 +17,7 @@ import (
 // In cli compagnyhelper describe link grafana -n dev
 // Grafana | Your dashboard for your metrics | development | http://grafana.com \n
 func Retrieve(ctx context.Context, env string, name string) (result Application, err error) {
-	span, ctxChild := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.Retrieves")
+	span, ctxChild := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.Retrieve")
 	defer span.Finish()
 
 	results, err := find(ctxChild)

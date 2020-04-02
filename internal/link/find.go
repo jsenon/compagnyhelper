@@ -46,7 +46,7 @@ func initSAmple() []byte {
 }
 
 func find(ctx context.Context) (ObjectLink, error) {
-	span, _ := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.findByNameEnv")
+	span, _ := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.find")
 	defer span.Finish()
 
 	var myapp ObjectLink
