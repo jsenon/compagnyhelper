@@ -30,11 +30,11 @@ jobs:
             dep ensure
         fi
     
-    - name: golangci-lint
-      uses: actions-contrib/golangci-lint@v1
+    - name: Run golangci-lint with reviewdog
+      uses: reviewdog/action-golangci-lint@v1.1.3
       with:
-        # golangci-lint docker release tag
-        golangci_lint_version: v1.23
+        # GITHUB_TOKEN.
+        github_token: ${{ secrets.github }}
 
     - name: Build
       run: make build_local
