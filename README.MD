@@ -1,5 +1,8 @@
 # WIP: Compagny helper
 
+![Go](https://github.com/jsenon/compagnyhelper/workflows/Go/badge.svg?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jsenon/compagnyhelper)](https://goreportcard.com/report/github.com/jsenon/compagnyhelper)
+
 Tired to find into your bookmarks a corporate link?
 
 Why do not use a helper command line in order to retrieve for example the compagny kibana urls?

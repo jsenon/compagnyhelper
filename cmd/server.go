@@ -78,6 +78,7 @@ func defaultJSON() {
 		if err != nil {
 			log.Error().Msgf("Error getting working directory: %v", err.Error())
 		}
+
 		viper.SetDefault("INPUTJSON", path+"/apps.json")
 	}
 }

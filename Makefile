@@ -38,7 +38,7 @@ build:
 	docker build $(DOCKER_BUILD_ARGS) -t $(DOCKER_USER)/compagnyhelper:$(APP_VERSION) -f ./build/Dockerfile .
 lint:
 ifndef GOLINTER
-	GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.15
+	GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.23
 endif
 	golangci-lint run
 
@@ -56,7 +56,7 @@ artifact_darwin:
 # DEPLOY
 #-----------------------------------------------------------------------------
 deploy:
-	kubectl apply -f deployments/k8s.yml
+	kubectl apply -f deployment/
 #-----------------------------------------------------------------------------
 # PUBLISH
 #-----------------------------------------------------------------------------
