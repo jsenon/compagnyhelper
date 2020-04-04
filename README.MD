@@ -8,7 +8,7 @@ Why do not use a helper command line in order to retrieve for example the compag
 
 Remain:
 
-- Server: Load json from file
+- Automatic packages
 
 ## How its work
 
@@ -60,31 +60,31 @@ Check additional option with `-help` command
 
 ```json
 {
-	"applications": [
-		{
-			"shortname": "Kibana",
-			"appdesc": {
-				"longname": "Kibana Dashboard for yourr logs",
-				"link": "http://kibana.com",
-				"env": "dev"
-			}
-		},
-		{
-			"shortname": "Grafana",
-			"appdesc": {
-				"longname": "Grafana Dashboard for yourr metrics",
-				"link": "http://grafana.com",
-				"env": "dev"
-			}
-		},
-		{
-			"shortname": "Kibana",
-			"appdesc": {
-				"longname": "Kibana Dashboard for yourr logs",
-				"link": "http://kibana.com",
-				"env": "prod"
-			}
-		}
-	]
+    "applications": [
+        {
+            "shortname": "Kibana",
+            "appdesc": {
+                "longname": "Kibana Dashboard for yourr logs",
+                "link": "http://kibana.com",
+                "env": "dev"
+            }
+        },
+        {
+            "shortname": "Grafana",
+            "appdesc": {
+                "longname": "Grafana Dashboard for yourr metrics",
+                "link": "http://grafana.com",
+                "env": "dev"
+            }
+        },
+        {
+            "shortname": "Kibana",
+            "appdesc": {
+                "longname": "Kibana Dashboard for yourr logs",
+                "link": "http://kibana.com",
+                "env": "prod"
+            }
+        }
+    ]
 }
 ```
