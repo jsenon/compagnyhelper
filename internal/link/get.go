@@ -10,10 +10,12 @@ import (
 
 // Get retrieve application link(s) available
 // In cli compagnyhelper get link -n all
-func Get(ctx context.Context, serverurl string) {
+func Get(ctx context.Context, env string, serverurl string) {
 	var linkstruct ObjectLink
 
 	var resp *http.Response
+
+	var requestbody []byte
 
 	var req *http.Request
 
@@ -23,10 +25,18 @@ func Get(ctx context.Context, serverurl string) {
 
 	client := &http.Client{}
 
-	requestbody, err := json.Marshal(map[string]string{
-		"env":  "all",
-		"name": "",
-	})
+	if env == "all" || env == "" {
+		requestbody, err = json.Marshal(map[string]string{
+			"env":  "all",
+			"name": "",
+		})
+	} else {
+		requestbody, err = json.Marshal(map[string]string{
+			"env":  env,
+			"name": "",
+		})
+	}
+
 	if err != nil {
 		fmt.Printf("Error retrieving application link: %v", err)
 	}

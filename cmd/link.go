@@ -36,7 +36,7 @@ var linkGetCmd = &cobra.Command{
 			return
 		}
 		if app == "" {
-			link.Get(ctx, myurl.String())
+			link.Get(ctx, env, myurl.String())
 		} else {
 			link.GetDetail(ctx, env, app, myurl.String())
 		}

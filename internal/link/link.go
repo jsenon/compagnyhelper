@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/opentracing/opentracing-go"
+	"github.com/rs/zerolog/log"
 )
 
 // Retrieve find the app with env and name provided
@@ -50,10 +51,29 @@ func RetrieveAll(ctx context.Context, env string) (result ObjectLink, err error)
 	span, ctxChild := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.RetrieveAll")
 	defer span.Finish()
 
-	result, err = find(ctxChild)
+	results, err := find(ctxChild)
 	if err != nil {
 		return ObjectLink{}, err
 	}
 
-	return result, nil
+	var myresult Application
+
+	if env != "all" || env == "" {
+		for i := range results.Applications {
+			myobj := &results.Applications[i]
+			if myobj.Desc.Env == env {
+				myresult.Shortname = myobj.Shortname
+				myresult.Desc.Longname = myobj.Desc.Longname
+				myresult.Desc.Link = myobj.Desc.Link
+				myresult.Desc.Env = myobj.Desc.Env
+				result.Applications = append(result.Applications, myresult)
+			}
+		}
+
+		log.Debug().Msgf("result: %v", result)
+
+		return result, nil
+	}
+
+	return results, nil
 }
