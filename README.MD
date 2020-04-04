@@ -22,6 +22,12 @@ Get All application registered:
 compagnyhelper get links
 ```
 
+Get All application registered in dedicated namespace:
+
+```sh
+compagnyhelper get links -n dev
+```
+
 Get link of an application:
 
 ```sh
@@ -38,4 +44,47 @@ Open application in a borwser
 
 ```sh
 compagnyhelper open links Kibana -n prod
+```
+
+## Server launch
+
+Launch the server with following command
+
+```sh
+compagnyhelper server
+```
+
+Check additional option with `-help` command
+
+### json application sample
+
+```json
+{
+	"applications": [
+		{
+			"shortname": "Kibana",
+			"appdesc": {
+				"longname": "Kibana Dashboard for yourr logs",
+				"link": "http://kibana.com",
+				"env": "dev"
+			}
+		},
+		{
+			"shortname": "Grafana",
+			"appdesc": {
+				"longname": "Grafana Dashboard for yourr metrics",
+				"link": "http://grafana.com",
+				"env": "dev"
+			}
+		},
+		{
+			"shortname": "Kibana",
+			"appdesc": {
+				"longname": "Kibana Dashboard for yourr logs",
+				"link": "http://kibana.com",
+				"env": "prod"
+			}
+		}
+	]
+}
 ```

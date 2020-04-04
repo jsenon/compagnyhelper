@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jsenon/compagnyhelper/internal/link"
 	"github.com/opentracing/opentracing-go"
+	"github.com/rs/zerolog/log"
+	"github.com/spf13/viper"
 )
 
 // In cli compagnyhelper get link -n dev, output will be
@@ -17,14 +19,18 @@ func retrieveLinks(c *gin.Context) {
 	span, ctxChild := opentracing.StartSpanFromContext(c.Request.Context(), "(*compagnyhelper).web.retrieveLinks")
 	defer span.Finish()
 
+	inputjson := viper.GetString("INPUTJSON")
+
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	links, err := link.RetrieveAll(ctxChild, request.Env)
+	links, err := link.RetrieveAll(ctxChild, request.Env, inputjson)
 	if err != nil {
+		log.Error().Msgf("Error retrieve links: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "something went wrong"})
+
 		return
 	}
 
@@ -40,16 +46,21 @@ func retrievedescribeLink(c *gin.Context) {
 	span, ctxChild := opentracing.StartSpanFromContext(c.Request.Context(), "(*compagnyhelper).web.retrievedescribeLink")
 	defer span.Finish()
 
+	inputjson := viper.GetString("INPUTJSON")
+
 	name := c.Param("name")
 
 	if err := c.ShouldBindJSON(&request); err != nil {
+		log.Error().Msgf("Error retrieve links: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
 		return
 	}
 
-	link, err := link.Retrieve(ctxChild, request.Env, name)
+	link, err := link.Retrieve(ctxChild, request.Env, name, inputjson)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "something went wrong"})
+
 		return
 	}
 
@@ -62,15 +73,19 @@ func openLink(c *gin.Context) {
 	defer span.Finish()
 
 	name := c.Param("name")
+	inputjson := viper.GetString("INPUTJSON")
 
 	if err := c.ShouldBindJSON(&request); err != nil {
+		log.Error().Msgf("Error retrieve links: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
 		return
 	}
 
-	link, err := link.Retrieve(ctxChild, request.Env, name)
+	link, err := link.Retrieve(ctxChild, request.Env, name, inputjson)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "something went wrong"})
+
 		return
 	}
 

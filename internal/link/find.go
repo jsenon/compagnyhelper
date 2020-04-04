@@ -3,56 +3,24 @@ package link
 import (
 	"context"
 	"encoding/json"
+	"io/ioutil"
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/rs/zerolog/log"
 )
 
-// find env or name of the link inside yaml file
-
-// Sample value for testing purpose
-// will be replace by func for load the json file
-func initSAmple() []byte {
-	sampleJSONLinks := []byte(`{
-	"applications": [
-		{
-		"shortname": "Kibana",
-			"appdesc": {
-				"longname": "Kibana Dashboard for yourr logs",
-				"link": "http://kibana.com",
-				"env": "dev"
-			}
-		},
-		{
-		"shortname": "Grafana",
-			"appdesc": {
-				"longname": "Grafana Dashboard for yourr metrics",
-				"link": "http://grafana.com",
-				"env": "dev"
-			}
-		},
-		{
-			"shortname": "Kibana",
-				"appdesc": {
-					"longname": "Kibana Dashboard for yourr logs",
-					"link": "http://kibana.com",
-					"env": "prod"
-				}
-		}
-	]
-	}`)
-
-	return sampleJSONLinks
-}
-
-func find(ctx context.Context) (ObjectLink, error) {
+func find(ctx context.Context, inputjson string) (ObjectLink, error) {
 	span, _ := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.find")
 	defer span.Finish()
 
 	var myapp ObjectLink
 
-	myjson := initSAmple()
-	err := json.Unmarshal(myjson, &myapp)
+	myjson, err := readFromFile(ctx, inputjson)
+	if err != nil {
+		return ObjectLink{}, err
+	}
+
+	err = json.Unmarshal(myjson, &myapp)
 
 	if err != nil {
 		return ObjectLink{}, err
@@ -61,4 +29,16 @@ func find(ctx context.Context) (ObjectLink, error) {
 	log.Debug().Msgf("app: %v", myapp)
 
 	return myapp, nil
+}
+
+func readFromFile(ctx context.Context, inputjson string) ([]byte, error) {
+	span, _ := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.readFromFile")
+	defer span.Finish()
+
+	content, err := ioutil.ReadFile(inputjson) //nolint: gosec
+	if err != nil {
+		return nil, err
+	}
+
+	return content, nil
 }

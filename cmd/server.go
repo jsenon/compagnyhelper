@@ -3,6 +3,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jsenon/compagnyhelper/configs"
 	mylog "github.com/jsenon/compagnyhelper/internal/log"
@@ -14,7 +15,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var inputdir string
+var inputjson string
 var disabletrace bool
 var jaegerurl string
 
@@ -35,18 +36,19 @@ var serverCmd = &cobra.Command{
 			}
 			log.Debug().Msg("Log level set to Debug")
 		}
+		defaultJSON()
 		web.Serve()
 	},
 }
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	serverCmd.PersistentFlags().StringVar(&inputdir, "inputdir", "",
-		"Set folder where input file are located")
+	serverCmd.PersistentFlags().StringVar(&inputjson, "inputjson", "",
+		"Set location of the application json definition default is $HOME/apps.json")
 
-	err := viper.BindPFlag("inputdir", serverCmd.PersistentFlags().Lookup("env"))
+	err := viper.BindPFlag("inputjson", serverCmd.PersistentFlags().Lookup("inputjson"))
 	if err != nil {
-		log.Error().Msgf("Error binding env value: %v", err.Error())
+		log.Error().Msgf("Error binding inputjson value: %v", err.Error())
 	}
 
 	serverCmd.PersistentFlags().BoolVar(&disabletrace, "disabletrace", false, "Disable the trace")
@@ -65,9 +67,17 @@ func init() {
 	}
 
 	viper.SetDefault("jaegerurl", "")
-}
 
-func init() {
 	rootCmd.AddCommand(serverCmd)
 	cobra.OnInitialize(initConfig)
+}
+
+func defaultJSON() {
+	if inputjson == "" {
+		path, err := os.Getwd()
+		if err != nil {
+			log.Error().Msgf("Error getting working directory: %v", err.Error())
+		}
+		viper.SetDefault("INPUTJSON", path+"/apps.json")
+	}
 }

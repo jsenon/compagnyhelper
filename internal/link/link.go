@@ -17,11 +17,11 @@ import (
 //
 // In cli compagnyhelper describe link grafana -n dev
 // Grafana | Your dashboard for your metrics | development | http://grafana.com \n
-func Retrieve(ctx context.Context, env string, name string) (result Application, err error) {
+func Retrieve(ctx context.Context, env string, name string, inputjson string) (result Application, err error) {
 	span, ctxChild := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.Retrieve")
 	defer span.Finish()
 
-	results, err := find(ctxChild)
+	results, err := find(ctxChild, inputjson)
 	if err != nil {
 		return Application{}, err
 	}
@@ -47,11 +47,11 @@ func Retrieve(ctx context.Context, env string, name string) (result Application,
 //
 // In cli compagnyhelper get link --all, output will be
 // Grafana dev \n Kibana dev \n Grafana prod \n
-func RetrieveAll(ctx context.Context, env string) (result ObjectLink, err error) {
+func RetrieveAll(ctx context.Context, env string, inputjson string) (result ObjectLink, err error) {
 	span, ctxChild := opentracing.StartSpanFromContext(ctx, "(*compagnyhelper).link.RetrieveAll")
 	defer span.Finish()
 
-	results, err := find(ctxChild)
+	results, err := find(ctxChild, inputjson)
 	if err != nil {
 		return ObjectLink{}, err
 	}
