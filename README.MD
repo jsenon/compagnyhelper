@@ -17,6 +17,14 @@ Remain:
 
 A client cli will contact a server containing all the corporate usefull links
 
+## Client configuration
+
+You need to register the URL of the server, you can configure it in `$HOME/.compagnyhelper.yaml`
+
+```yaml
+url_server: "http://localhost:8080"
+```
+
 ## Example
 
 Get All application registered:
