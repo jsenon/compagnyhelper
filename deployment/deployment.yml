@@ -28,7 +28,7 @@ spec:
           args:
             [
               "server",
-              "--intputjson",
+              "--inputjson",
               "/datas/apps.json",
               "--disabletrace",
             ]
