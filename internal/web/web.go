@@ -13,10 +13,10 @@ import (
 	"github.com/gin-contrib/logger"
 	"github.com/gin-contrib/opengintracing"
 	"github.com/gin-gonic/gin"
+	myopentracing "github.com/jsenon/compagnyhelper/internal/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"github.com/spf13/viper"
-
-	myopentracing "github.com/jsenon/compagnyhelper/internal/opentracing"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 
 	"github.com/rs/zerolog/log"
 )
@@ -62,6 +62,9 @@ func setupRoutes(tracer opentracing.Tracer) {
 	router.Use(gin.Recovery())
 	router.Use(logger.SetLogger())
 
+	prometheus := ginprometheus.NewPrometheus("compagnyhelper")
+	prometheus.Use(router)
+
 	setRouterAPI(router, tracer)
 
 	srv := &http.Server{
@@ -96,6 +99,8 @@ func setRouterAPI(router *gin.Engine, tracer opentracing.Tracer) {
 		opengintracing.NewSpan(tracer, "healthz"),
 		opengintracing.InjectToHeaders(tracer, true),
 		healthz)
+
+	// router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	router.POST("/retrieve-links",
 		opengintracing.NewSpan(tracer, "retrieve-links"),
