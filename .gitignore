@@ -73,7 +73,6 @@ Cargo.lock
 
 # End of https://www.gitignore.io/api/go,macos,visualstudiocode,rust
 
-http2-uploaderserver
+compagnyhelper
 *.code-workspace
-index-staging.html
 deployment/deployment-delair.yml
