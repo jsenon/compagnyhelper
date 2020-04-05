@@ -28,8 +28,8 @@ spec:
           args:
             [
               "server",
-              "--intputdir",
-              "/datas",
+              "--intputjson",
+              "/datas/apps.json",
               "--disabletrace",
             ]
           volumeMounts:
@@ -37,4 +37,8 @@ spec:
               name: compagnyhelper-volume
       volumes:
         - name: compagnyhelper-volume
-          emptyDir: {}
+          configMap:
+            name: compagnyhelper-cm
+            items:
+            - key: apps.json
+              path: apps.json

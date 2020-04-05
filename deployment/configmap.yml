@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  apps.json: "{\n\t\"applications\": [\n\t\t{\n\t\t\t\"shortname\": \"Kibana\",\n\t\t\t\"appdesc\":
+    {\n\t\t\t\t\"longname\": \"Kibana Dashboard for yourr logs\",\n\t\t\t\t\"link\":
+    \"http://kibana.com\",\n\t\t\t\t\"env\": \"dev\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"shortname\":
+    \"Grafana\",\n\t\t\t\"appdesc\": {\n\t\t\t\t\"longname\": \"Grafana Dashboard
+    for yourr metrics\",\n\t\t\t\t\"link\": \"http://grafana.com\",\n\t\t\t\t\"env\":
+    \"dev\"\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\t\"shortname\": \"Kibana\",\n\t\t\t\"appdesc\":
+    {\n\t\t\t\t\"longname\": \"Kibana Dashboard for yourr logs\",\n\t\t\t\t\"link\":
+    \"http://kibana.com\",\n\t\t\t\t\"env\": \"prod\"\n\t\t\t}\n\t\t}\n\t]\n}"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: compagnyhelper-cm
