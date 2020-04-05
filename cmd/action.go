@@ -29,12 +29,7 @@ var openCmd = &cobra.Command{
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-}
-
-func init() {
 	rootCmd.AddCommand(getCmd)
 	rootCmd.AddCommand(describeCmd)
 	rootCmd.AddCommand(openCmd)
-	cobra.OnInitialize(initConfig)
 }

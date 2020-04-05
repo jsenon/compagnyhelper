@@ -42,7 +42,6 @@ var serverCmd = &cobra.Command{
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 	serverCmd.PersistentFlags().StringVar(&inputjson, "inputjson", "",
 		"Set location of the application json definition default is $HOME/apps.json")
 
@@ -69,7 +68,6 @@ func init() {
 	viper.SetDefault("jaegerurl", "")
 
 	rootCmd.AddCommand(serverCmd)
-	cobra.OnInitialize(initConfig)
 }
 
 func defaultJSON() {

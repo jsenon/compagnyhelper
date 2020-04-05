@@ -90,8 +90,6 @@ var linkOpCmd = &cobra.Command{ //nolint: dupl
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-
 	linkGetCmd.PersistentFlags().StringVar(&env, "n", "all",
 		"Set environment variable where retrieve object")
 
@@ -115,11 +113,8 @@ func init() {
 	if err != nil {
 		log.Error().Msgf("Error binding env value: %v", err.Error())
 	}
-}
 
-func init() {
 	getCmd.AddCommand(linkGetCmd)
 	describeCmd.AddCommand(linkDescCmd)
 	openCmd.AddCommand(linkOpCmd)
-	cobra.OnInitialize(initConfig)
 }
