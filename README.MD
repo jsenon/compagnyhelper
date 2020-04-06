@@ -13,11 +13,17 @@ A client cli will contact a server containing all the corporate usefull links
 
 ## Client configuration
 
+### How to install
+
+You may also download the appropriate release for your platform from the [releases page](https://github.com/jsenon/compagnyhelper/releases).
+
 You need to register the URL of the server, you can configure it in `$HOME/.compagnyhelper.yaml`
 
 ```yaml
 url_server: "http://localhost:8080"
 ```
+
+**Note:** For mac user, as the binary is not signed and notorized you have to authorize it in "Security & Privacy" control panel.
 
 ### Client Example
 
