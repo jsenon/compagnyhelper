@@ -30,25 +30,25 @@ compagnyhelper get link
 Get All application registered in dedicated namespace:
 
 ```sh
-compagnyhelper get link -n dev
+compagnyhelper get link --n dev
 ```
 
 Get link of an application:
 
 ```sh
-compagnyhelper get link Kibana -n dev
+compagnyhelper get link Kibana --n dev
 ```
 
 Describe an application link
 
 ```sh
-compagnyhelper describe link Kibana -n dev
+compagnyhelper describe link Kibana --n dev
 ```
 
 Open application in a borwser
 
 ```sh
-compagnyhelper open link Kibana -n prod
+compagnyhelper open link Kibana --n prod
 ```
 
 ## Server launch
