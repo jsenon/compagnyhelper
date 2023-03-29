@@ -73,7 +73,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Publish Docker
-      uses: elgohr/Publish-Docker-Github-Action@2.14
+      uses: elgohr/Publish-Docker-Github-Action@v5
       with:
         name: jsenon/compagnyhelper
         username: ${{ secrets.DOCKER_USERNAME }}
